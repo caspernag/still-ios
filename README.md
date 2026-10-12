@@ -50,7 +50,6 @@ open Still.xcodeproj                   # scheme "Still"; StoreKit config Still.s
 xcodebuild test -scheme Still -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 swift test --package-path StillKit     # core logic, also runs on Linux
 Scripts/screenshots.sh                 # App Store screenshots → AppStore/screenshots/
-python3 Scripts/strings_audit.py       # every UI string has a Norwegian translation
 ```
 
 CI (`.github/workflows/ci.yml`) builds for device in Release and runs every test on a macOS runner.
@@ -64,6 +63,6 @@ CI (`.github/workflows/ci.yml`) builds for device in Release and runs every test
 | `StillKit/` | Shared package: `StillCore`, `StillKit`, `DesignSystem`, plus core tests |
 | `StillMonitor/`, `StillShieldConfig/`, `StillShieldAction/`, `StillWidgets/` | Extensions |
 | `StillTests/`, `StillUITests/` | App unit, StoreKit and UI tests |
-| `AppStore/` | Metadata (en/nb), privacy and terms pages, icon, screenshots |
+| `AppStore/` | Metadata, privacy and terms pages, icon, screenshots |
 | `Design/` | The approved design file and reference renders of all 12 artboards |
 | `Scripts/` | Icon generation, string catalogs, screenshots |

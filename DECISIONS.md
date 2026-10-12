@@ -35,8 +35,10 @@ robust and simple option.
 ## Screens and behavior
 
 - **Choose apps** uses `FamilyActivityPicker` (iOS can't list apps). The design's toggle list becomes a
-  summary card that renders up to six tokens with `Label(token)`, plus "and N more".
-- **Home's "Blocking …" subtitle** shows up to three token titles (`Label(token).labelStyle(.titleOnly)`).
+  summary card with the count and up to eight icons.
+- **"Blocking 2 apps and 3 categories"** (Home and Choose apps) shows the real app and category
+  icons underneath (`Label(token).labelStyle(.iconOnly)` in small tiles, apps first, "+N" when
+  there are more) instead of a line of names. Owner request: as visual as possible.
 - **Custom duration** is a fifth segment labelled "Custom" (or the custom value once set). Free users
   get the paywall. If Pro lapses, a saved custom duration silently falls back to 30 minutes.
 - **The "Be still" circle and "Start session"** both start a session. With nothing selected, Choose apps
@@ -93,7 +95,7 @@ robust and simple option.
 - **This week** follows the locale's first weekday (Monday in Norway).
 - **Reclaimed time** sums completed time in seconds (partial minutes count) and is displayed rounded
   down to whole minutes. It never exceeds the planned duration.
-- **Seeded schedule** "Nights 22:00–07:00" (every day, off) is localized at first launch ("Natt" in nb).
+- **Seeded schedule** "Nights 22:00–07:00" (every day, off).
 
 ## Subscriptions
 
@@ -124,10 +126,9 @@ robust and simple option.
 - The shield and the Live Activity can't be captured by UI tests, so demo mode renders the same views
   in-app for screenshots (`DemoScreens.swift`, DEBUG only).
 
-## Localization
+## Language
 
-- English is the development language; Norwegian Bokmål (`nb`) is complete. Plural forms use the
-  catalog's plural variations where a count appears in a sentence; elsewhere the code picks the
-  "one"/"other" key (both languages have only those two forms).
-- `Scripts/build_catalogs.py` generates the catalogs and `Scripts/strings_audit.py` fails if any UI
-  string lacks an `nb` translation.
+- **English only**, by the owner's decision ("Be still" everywhere). No String Catalogs are
+  shipped; dates and times still follow the device region (e.g. 24-hour time in Norway), and lists
+  like "2 apps and 3 categories" are always formatted in English. System UI (Screen Time picker,
+  StoreKit sheets) follows the device language, as iOS decides.

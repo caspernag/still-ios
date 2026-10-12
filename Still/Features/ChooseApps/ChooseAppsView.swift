@@ -90,7 +90,7 @@ struct ChooseAppsView: View {
     }
 }
 
-/// Renders what is selected with `Label(token)`, the only way iOS exposes app names and icons.
+/// What is selected: the count, then the real app and category icons (`Label(token)`).
 struct SelectionSummaryCard: View {
     @Environment(AppModel.self) private var model
 
@@ -107,6 +107,7 @@ struct SelectionSummaryCard: View {
                             Text(Formatters.blockingTitle(model.selectionSummary))
                                 .stillFont(.calloutMedium)
                                 .foregroundStyle(StillColor.ink)
+                                .fixedSize(horizontal: false, vertical: true)
                             Text("Locked during every session")
                                 .stillFont(.footnote)
                                 .foregroundStyle(StillColor.inkSecondary)
@@ -117,7 +118,11 @@ struct SelectionSummaryCard: View {
                     .padding(.vertical, 12)
                     .accessibilityElement(children: .combine)
 
-                    tokenRows
+                    StillDivider()
+
+                    SelectionIcons(limit: 8)
+                        .padding(.horizontal, StillSpacing.rowHorizontal)
+                        .padding(.vertical, 14)
                 } else {
                     Text("Nothing selected yet. Choose the apps, categories or websites you want to lock.")
                         .stillFont(.callout)
@@ -129,61 +134,5 @@ struct SelectionSummaryCard: View {
             }
         }
         .accessibilityIdentifier("selectionSummary")
-    }
-
-    @ViewBuilder
-    private var tokenRows: some View {
-        #if DEBUG
-        if model.config.isDemo {
-            ForEach(["Social", "Video", "News"], id: \.self) { name in
-                StillDivider(leadingInset: 62)
-                row { Label(LocalizedStringKey(name), systemImage: "square.grid.2x2") }
-            }
-        } else {
-            realTokenRows
-        }
-        #else
-        realTokenRows
-        #endif
-    }
-
-    @ViewBuilder
-    private var realTokenRows: some View {
-        let selection = model.selection
-        let categories = Array(selection.categoryTokens).prefix(6)
-        let apps = Array(selection.applicationTokens).prefix(max(0, 6 - categories.count))
-        let domains = Array(selection.webDomainTokens).prefix(max(0, 6 - categories.count - apps.count))
-
-        ForEach(Array(categories), id: \.self) { token in
-            StillDivider(leadingInset: 62)
-            row { Label(token) }
-        }
-        ForEach(Array(apps), id: \.self) { token in
-            StillDivider(leadingInset: 62)
-            row { Label(token) }
-        }
-        ForEach(Array(domains), id: \.self) { token in
-            StillDivider(leadingInset: 62)
-            row { Label(token) }
-        }
-        let shown = categories.count + apps.count + domains.count
-        if model.selectionSummary.total > shown {
-            StillDivider(leadingInset: 62)
-            Text("and \(model.selectionSummary.total - shown) more")
-                .stillFont(.footnote)
-                .foregroundStyle(StillColor.inkSecondary)
-                .padding(.leading, 62)
-                .padding(.vertical, 12)
-        }
-    }
-
-    private func row<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
-        content()
-            .stillFont(.callout)
-            .foregroundStyle(StillColor.ink)
-            .lineLimit(1)
-            .padding(.leading, 62)
-            .padding(.trailing, StillSpacing.rowHorizontal)
-            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
     }
 }

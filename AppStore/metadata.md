@@ -6,7 +6,7 @@ promotional text 170, keywords 100, description 4000).
 
 ---
 
-## English (U.S.) — primary
+## English (U.S.) — the only language (the app is English-only)
 
 **Name** (5/30)
 Still
@@ -57,48 +57,6 @@ https://nagsoftware.no/still
 
 ---
 
-## Norsk (bokmål)
-
-**Navn** (5/30)
-Still
-
-**Undertittel** (28/30)
-Lås appene som stjeler tiden
-
-**Reklametekst** (153/170)
-Velg appene som drar deg inn, trykk én gang, så er de låst til tiden er ute. Å avslutte tidlig krever et langt, bevisst trykk. Prøv Pro gratis i 7 dager.
-
-**Beskrivelse**
-Still er en rolig måte å legge fra seg telefonen på.
-
-Velg appene som drar deg inn. Trykk én gang. De er låst til tiden er ute. Må du virkelig avslutte tidlig, krever det et langt, bevisst trykk på 5 sekunder — en liten pause for å spørre: trenger jeg egentlig dette?
-
-SLIK FUNGERER DET
-• Velg apper, kategorier eller nettsteder med Apples Skjermtid-velger
-• Start en økt på 15 minutter, 30 minutter, 1 time eller 2 timer
-• Blokkerte apper viser en rolig «Vær still.»-skjerm til økten er over
-• Følg nedtellingen på låseskjermen og i Dynamic Island
-• Se hvor mye tid du har tatt tilbake denne uken, og hold rekken i gang
-
-STILL PRO
-• Tidsplaner som låser apper automatisk hver uke (for eksempel hver natt 22:00–07:00)
-• Streng modus, uten mulighet til å avslutte tidlig
-• Egne øktlengder fra 15 minutter til 12 timer
-• Ukentlig innsikt: tid tatt tilbake per dag, rekker, økter og fristelser motstått
-
-Still Pro er et abonnement som fornyes automatisk, årlig eller månedlig, med 7 dagers gratis prøveperiode. Betalingen trekkes fra Apple-kontoen din når prøveperioden er over, med mindre du sier opp minst 24 timer før. Abonnementet fornyes automatisk med mindre det sies opp minst 24 timer før perioden er slutt. Du kan administrere eller si opp når som helst i Innstillinger → Apple-konto → Abonnementer.
-
-PERSONVERN FRA BUNNEN AV
-Still bruker Apples Skjermtid-rammeverk. Alt blir på iPhonen din: ingen konto, ingen servere, ingen analyse. Still ser aldri hvilke apper du bruker — Apple gir bare anonyme tokener.
-
-Bruksvilkår: https://nagsoftware.no/still/terms
-Personvern: https://nagsoftware.no/still/privacy
-
-**Nøkkelord** (88/100)
-fokus,skjermtid,appblokkering,detox,digital helse,distraksjon,produktivitet,timer,lås,ro
-
----
-
 ## Category
 
 - Primary: **Productivity**
@@ -144,9 +102,9 @@ Subscription group: **Still Pro** (group display name "Still Pro")
 | Still Pro Yearly | com.nagsoftware.still.pro.yearly | 1 year | USD 29.99 (tier) | Free trial, 1 week, new subscribers |
 | Still Pro Monthly | com.nagsoftware.still.pro.monthly | 1 month | USD 4.99 (tier) | Free trial, 1 week, new subscribers |
 
-Localized display names / descriptions:
-- en: "Still Pro Yearly" / "Schedules, strict mode, custom durations and insights." ; "Still Pro Monthly" / same
-- nb: "Still Pro årlig" / "Tidsplaner, streng modus, egne varigheter og innsikt." ; "Still Pro månedlig" / same
+Display names / descriptions (English):
+- "Still Pro Yearly" / "Schedules, strict mode, custom durations and insights."
+- "Still Pro Monthly" / same
 
 Review screenshot for the subscription: use `AppStore/screenshots/` paywall (or a simulator
 screenshot of Home → Custom). Review notes: "Opened from Settings → Still Pro → Try free, or

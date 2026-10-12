@@ -1,8 +1,7 @@
 import Foundation
 import StillKit
 
-/// Localized strings built from numbers. All text goes through the String Catalog;
-/// "one" vs "other" is chosen here (English and Norwegian Bokmål both use those two forms).
+/// Strings built from numbers. The app is English-only; "one" vs "other" is chosen here.
 enum Formatters {
     /// Short duration: "45 min", "2 h", "3 h 12 min".
     static func duration(seconds: TimeInterval) -> String {
@@ -70,7 +69,7 @@ enum Formatters {
             let n = summary.webDomains
             parts.append(n == 1 ? String(localized: "\(n) website") : String(localized: "\(n) websites"))
         }
-        return parts.formatted(.list(type: .and, width: .narrow))
+        return parts.formatted(.list(type: .and, width: .standard).locale(Locale(identifier: "en_US")))
     }
 
     /// "Blocking 3 categories" / "Nothing selected yet"

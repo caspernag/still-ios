@@ -109,7 +109,7 @@ struct HomeView: View {
     }
 }
 
-/// "Blocking 3 categories" card; opens Choose apps.
+/// "Blocking 2 apps and 3 categories" card with the selected app and category icons; opens Choose apps.
 private struct BlockingCard: View {
     @Environment(AppModel.self) private var model
 
@@ -118,20 +118,24 @@ private struct BlockingCard: View {
             model.openChooseApps()
         } label: {
             StillCard {
-                HStack(spacing: 14) {
+                HStack(alignment: .center, spacing: 14) {
                     StillTile(size: 32) {
                         Image(systemName: "lock")
                             .font(.system(size: 14, weight: .semibold))
                     }
-                    VStack(alignment: .leading, spacing: 1) {
+                    VStack(alignment: .leading, spacing: 8) {
                         Text(Formatters.blockingTitle(model.selectionSummary))
                             .stillFont(.calloutMedium)
                             .foregroundStyle(StillColor.ink)
-                            .lineLimit(1)
-                        subtitle
-                            .stillFont(.footnote)
-                            .foregroundStyle(StillColor.inkSecondary)
-                            .lineLimit(1)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
+                        if model.hasSelection {
+                            SelectionIcons(limit: 6, tileSize: 30)
+                        } else {
+                            Text("Tap to pick apps and categories")
+                                .stillFont(.footnote)
+                                .foregroundStyle(StillColor.inkSecondary)
+                        }
                     }
                     Spacer(minLength: 0)
                     Image(systemName: "chevron.right")
@@ -147,36 +151,5 @@ private struct BlockingCard: View {
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
         .accessibilityIdentifier("blockingCard")
-    }
-
-    @ViewBuilder
-    private var subtitle: some View {
-        if !model.hasSelection {
-            Text("Tap to pick apps and categories")
-        } else if model.config.isDemo {
-            Text(verbatim: "Social, Video, News")
-        } else {
-            TokenNames(selection: model.selection)
-        }
-    }
-}
-
-/// Up to three selected items as titles, e.g. "Social, Video, News".
-private struct TokenNames: View {
-    let selection: FamilyActivitySelection
-
-    var body: some View {
-        HStack(spacing: 0) {
-            let categories = Array(selection.categoryTokens.prefix(3))
-            let apps = Array(selection.applicationTokens.prefix(max(0, 3 - categories.count)))
-            ForEach(Array(categories.enumerated()), id: \.offset) { index, token in
-                if index > 0 { Text(verbatim: ", ") }
-                Label(token).labelStyle(.titleOnly)
-            }
-            ForEach(Array(apps.enumerated()), id: \.offset) { index, token in
-                if index > 0 || !categories.isEmpty { Text(verbatim: ", ") }
-                Label(token).labelStyle(.titleOnly)
-            }
-        }
     }
 }
