@@ -1,0 +1,124 @@
+name: TestFlight
+
+# Archives Still, signs it with automatic signing through an App Store Connect API key,
+# and uploads it to App Store Connect (TestFlight).
+#
+# Required repository secrets (Settings → Secrets and variables → Actions):
+#   ASC_KEY_ID        App Store Connect API key ID (e.g. ABC123DEFG)
+#   ASC_ISSUER_ID     Issuer ID shown above the keys list
+#   ASC_KEY_P8        The full contents of the downloaded AuthKey_XXXX.p8 file
+#   DEVELOPMENT_TEAM  Your 10-character Apple Team ID
+#
+# The key needs the "Admin" role so Xcode can create the App IDs, the App Group
+# and the provisioning profiles on its own.
+
+on:
+  workflow_dispatch:
+    inputs:
+      notes:
+        description: What to test (shown in TestFlight)
+        required: false
+        default: ''
+
+jobs:
+  upload:
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check secrets
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+        run: |
+          missing=0
+          for name in ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_P8 DEVELOPMENT_TEAM; do
+            if [ -z "${!name}" ]; then echo "::error::Missing secret $name"; missing=1; fi
+          done
+          exit $missing
+
+      - name: Select Xcode
+        run: |
+          XC="$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)"
+          if [ -n "$XC" ]; then sudo xcode-select -s "$XC"; fi
+          xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate project
+        run: xcodegen generate
+
+      - name: Write API key
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/keys"
+          printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/keys/AuthKey_$ASC_KEY_ID.p8"
+
+      - name: Archive
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+        run: |
+          set -o pipefail
+          BUILD_NUMBER="$(date -u +%Y%m%d%H%M)"
+          xcodebuild archive \
+            -project Still.xcodeproj -scheme Still -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Still.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$ASC_KEY_ID.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM" \
+            CURRENT_PROJECT_VERSION="$BUILD_NUMBER" 2>&1 | tee archive.log | grep -E "(error|warning):|ARCHIVE (SUCCEEDED|FAILED)"
+
+      - name: Upload to App Store Connect
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+        run: |
+          set -o pipefail
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>teamID</key><string>$DEVELOPMENT_TEAM</string>
+            <key>manageAppVersionAndBuildNumber</key><false/>
+            <key>uploadSymbols</key><true/>
+            <key>testFlightInternalTestingOnly</key><false/>
+          </dict>
+          </plist>
+          EOF
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Still.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$ASC_KEY_ID.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" 2>&1 | tee export.log | grep -E "(error|warning):|EXPORT (SUCCEEDED|FAILED)|Upload"
+
+      - name: Clean up key
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/keys"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: testflight-logs
+          path: |
+            archive.log
+            export.log
+          retention-days: 7

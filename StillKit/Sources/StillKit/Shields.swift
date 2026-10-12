@@ -5,7 +5,7 @@ import ManagedSettings
 
 extension ManagedSettingsStore.Name {
     /// The store used by manual sessions.
-    public static let stillSession = Self(ActivityNaming.sessionStoreName)
+    public static var stillSession: Self { Self(ActivityNaming.sessionStoreName) }
 
     /// The store used by one schedule.
     public static func stillSchedule(_ scheduleID: UUID) -> Self {
