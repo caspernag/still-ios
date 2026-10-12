@@ -41,8 +41,7 @@ final class LiveScreenTimeService: ScreenTimeService {
         switch AuthorizationCenter.shared.authorizationStatus {
         case .approved: authorization = .approved
         case .denied: authorization = .denied
-        case .notDetermined: authorization = .notDetermined
-        @unknown default: authorization = .notDetermined
+        default: authorization = .notDetermined
         }
     }
 

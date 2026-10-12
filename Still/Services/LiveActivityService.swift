@@ -21,17 +21,18 @@ final class LiveActivityService {
 
     /// Ends every Still activity except the one for `keeping` (the running session).
     func endAll(keeping activeSessionID: UUID? = nil) {
-        let activities = Activity<StillActivityAttributes>.activities.filter { $0.attributes.sessionID != activeSessionID }
-        guard !activities.isEmpty else { return }
-        Task {
-            for activity in activities {
-                let state = StillActivityAttributes.ContentState(
-                    start: activity.content.state.start,
-                    end: activity.content.state.end,
-                    isComplete: true
-                )
-                await activity.end(ActivityContent(state: state, staleDate: nil), dismissalPolicy: .immediate)
-            }
+        Task { await Self.endActivities(keeping: activeSessionID) }
+    }
+
+    /// Runs off the main actor so each `Activity` stays in one isolation domain.
+    nonisolated private static func endActivities(keeping activeSessionID: UUID?) async {
+        for activity in Activity<StillActivityAttributes>.activities where activity.attributes.sessionID != activeSessionID {
+            let state = StillActivityAttributes.ContentState(
+                start: activity.content.state.start,
+                end: activity.content.state.end,
+                isComplete: true
+            )
+            await activity.end(ActivityContent(state: state, staleDate: nil), dismissalPolicy: .immediate)
         }
     }
 }

@@ -37,7 +37,7 @@ final class ShieldActionExtension: ShieldActionDelegate {
         case .secondaryButtonPressed:
             // The secondary line ("You chose this at 21:45.") is informational.
             return .none
-        @unknown default:
+        default:
             return .close
         }
     }
