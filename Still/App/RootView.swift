@@ -69,6 +69,9 @@ struct RootView: View {
         .onChange(of: entitlements.status) { _, _ in model.entitlementsChanged() }
         .onChange(of: entitlements.isLoaded) { _, _ in model.entitlementsChanged() }
         .onAppear { model.becameActive() }
+        #if DEBUG
+        .preferredColorScheme(model.config.forceDark ? .dark : nil)
+        #endif
     }
 }
 

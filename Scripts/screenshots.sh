@@ -38,19 +38,7 @@ xcodebuild test \
 mkdir -p "$OUT"
 xcrun xcresulttool export attachments --path "$RESULT" --output-path "$OUT/raw"
 
-# Name the files after the attachment names from the manifest.
-python3 - "$OUT" <<'PY'
-import json, os, shutil, sys
-out = sys.argv[1]
-raw = os.path.join(out, "raw")
-manifest = json.load(open(os.path.join(raw, "manifest.json")))
-for test in manifest:
-    for attachment in test.get("attachments", []):
-        name = attachment.get("suggestedHumanReadableName") or attachment["exportedFileName"]
-        base = name.split("_")[0]
-        shutil.copy(os.path.join(raw, attachment["exportedFileName"]), os.path.join(out, base + ".png"))
-shutil.rmtree(raw)
-print("Screenshots:", sorted(f for f in os.listdir(out) if f.endswith(".png")))
-PY
+python3 Scripts/export_attachments.py "$OUT/raw" "$OUT"
+rm -rf "$OUT/raw"
 
 xcrun simctl status_bar "$UDID" clear

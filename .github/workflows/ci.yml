@@ -84,3 +84,58 @@ jobs:
             build-release.log
             test.log
           retention-days: 7
+
+  screenshots:
+    name: Screenshots and design review
+    needs: ios
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: macos-26
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Select Xcode
+        run: |
+          XC="$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)"
+          if [ -n "$XC" ]; then sudo xcode-select -s "$XC"; fi
+
+      - name: Install XcodeGen
+        run: brew install xcodegen && xcodegen generate
+
+      - name: Boot 6.9-inch simulator
+        id: sim
+        run: |
+          NAME="$(xcrun simctl list devices available | grep -oE 'iPhone 1[6-9] Pro Max' | sort -u | tail -1)"
+          UDID="$(xcrun simctl list devices available | grep -m1 "    $NAME (" | sed -E 's/.*\(([0-9A-F-]{36})\).*/\1/')"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          echo "Using $NAME ($UDID)"
+          xcrun simctl boot "$UDID" || true
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl status_bar "$UDID" override --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 \
+            --cellularMode active --cellularBars 4 --batteryState charged --batteryLevel 100
+
+      - name: Capture
+        run: |
+          set -o pipefail
+          xcodebuild test -project Still.xcodeproj -scheme Still \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -only-testing:StillUITests/ScreenshotTests \
+            -only-testing:StillUITests/ReviewScreenshotTests \
+            -resultBundlePath Shots.xcresult 2>&1 | tail -30
+
+      - name: Export and commit
+        run: |
+          xcrun xcresulttool export attachments --path Shots.xcresult --output-path shots-raw
+          rm -rf AppStore/screenshots Design/review
+          python3 Scripts/export_attachments.py shots-raw AppStore/screenshots 0
+          python3 Scripts/export_attachments.py shots-raw Design/review light- dark- xxl-
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add AppStore/screenshots Design/review
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "Update screenshots [skip ci]"
+          git push

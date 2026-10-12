@@ -84,7 +84,7 @@ final class AppModel {
             let demoStore = SharedStore(defaults: defaults)
             demoStore.reset()
             store = demoStore
-            screenTime = DemoScreenTimeService(authorized: config.skipOnboarding)
+            screenTime = DemoScreenTimeService(authorized: config.skipOnboarding && config.initialScreen != .noAccess)
             entitlements = Entitlements(forcedStatus: config.forcePro ? .trial(daysLeft: 5) : nil)
         } else {
             store = .shared
@@ -112,6 +112,17 @@ final class AppModel {
 
         loadFromStore()
         authorization = screenTime.authorization
+
+        #if DEBUG
+        if config.initialScreen == .endedEarly, let session = try? SessionMath.makeSession(
+            start: clock.now.addingTimeInterval(-12 * 60), minutes: 30, isStrict: false
+        ) {
+            endedEarly = SessionRecord(
+                id: session.id, start: session.start, plannedEnd: session.end,
+                actualEnd: clock.now, outcome: .endedEarly
+            )
+        }
+        #endif
     }
 
     // MARK: Derived state
@@ -584,8 +595,25 @@ final class AppModel {
             path = [.chooseApps]
         case .settings?:
             path = [.settings]
+        case .schedules?:
+            path = [.schedules]
         case .paywall?:
             sheet = .paywall
+        case .customDuration?:
+            sheet = .customDuration
+        case .complete?:
+            let end = clock.now.addingTimeInterval(-60)
+            let record = SessionRecord(
+                id: UUID(), start: end.addingTimeInterval(-30 * 60), plannedEnd: end, actualEnd: end, outcome: .completed
+            )
+            store.appendRecord(record)
+            var demoFlags = store.flags
+            demoFlags.unseenCompletionID = record.id
+            demoFlags.completedSessionCount += 1
+            demoFlags.hasSeenAutomaticPaywall = true
+            demoFlags.hasRequestedReview = true
+            demoFlags.hasRequestedNotificationPermission = true
+            store.flags = demoFlags
         default:
             break
         }
