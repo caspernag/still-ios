@@ -1,0 +1,1606 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ locked" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ låst"
+          }
+        }
+      }
+    },
+    "%@,\nreclaimed." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@\ntatt tilbake."
+          }
+        }
+      }
+    },
+    "%@, reclaimed" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ tatt tilbake"
+          }
+        }
+      }
+    },
+    "%lld app" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld app"
+          }
+        }
+      }
+    },
+    "%lld apps" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld apper"
+          }
+        }
+      }
+    },
+    "%lld categories" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld kategorier"
+          }
+        }
+      }
+    },
+    "%lld category" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld kategori"
+          }
+        }
+      }
+    },
+    "%lld day" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld dag"
+          }
+        }
+      }
+    },
+    "%lld days" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld dager"
+          }
+        }
+      }
+    },
+    "%lld h" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld t"
+          }
+        }
+      }
+    },
+    "%lld h %lld min" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld t %lld min"
+          }
+        }
+      }
+    },
+    "%lld hour" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld time"
+          }
+        }
+      }
+    },
+    "%lld hours" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld timer"
+          }
+        }
+      }
+    },
+    "%lld min" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min"
+          }
+        }
+      }
+    },
+    "%lld minute" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld minutt"
+          }
+        }
+      }
+    },
+    "%lld minutes" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld minutter"
+          }
+        }
+      }
+    },
+    "%lld on" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld på"
+          }
+        }
+      }
+    },
+    "%lld website" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld nettsted"
+          }
+        }
+      }
+    },
+    "%lld websites" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld nettsteder"
+          }
+        }
+      }
+    },
+    "About" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om"
+          }
+        }
+      }
+    },
+    "Active" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiv"
+          }
+        }
+      }
+    },
+    "Add schedule" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legg til tidsplan"
+          }
+        }
+      }
+    },
+    "Allow Screen Time access" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gi tilgang til Skjermtid"
+          }
+        }
+      }
+    },
+    "Allow Still under Apps with Access" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillat Still under Apper med tilgang"
+          }
+        }
+      }
+    },
+    "Back" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilbake"
+          }
+        }
+      }
+    },
+    "Be still" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vær still"
+          }
+        }
+      }
+    },
+    "Be still." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vær still."
+          }
+        }
+      }
+    },
+    "Blocking %@" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blokkerer %@"
+          }
+        }
+      }
+    },
+    "Change apps" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endre apper"
+          }
+        }
+      }
+    },
+    "Choose apps" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg apper"
+          }
+        }
+      }
+    },
+    "Choose what to block" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg hva som skal låses"
+          }
+        }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lukk"
+          }
+        }
+      }
+    },
+    "Contact" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontakt"
+          }
+        }
+      }
+    },
+    "Couldn't reach the App Store. Please try again." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fikk ikke kontakt med App Store. Prøv igjen."
+          }
+        }
+      }
+    },
+    "Couldn't start the session. Please try again." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke starte økten. Prøv igjen."
+          }
+        }
+      }
+    },
+    "Custom" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Egen"
+          }
+        }
+      }
+    },
+    "Custom duration" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Egen varighet"
+          }
+        }
+      }
+    },
+    "Custom session lengths" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Egne øktlengder"
+          }
+        }
+      }
+    },
+    "Day" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dag"
+          }
+        }
+      }
+    },
+    "Delete schedule" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slett tidsplan"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ferdig"
+          }
+        }
+      }
+    },
+    "Edit schedule" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endre tidsplan"
+          }
+        }
+      }
+    },
+    "Ending early takes a slow, deliberate hold." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Å avslutte tidlig krever et langt, bevisst trykk."
+          }
+        }
+      }
+    },
+    "Ends" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slutter"
+          }
+        }
+      }
+    },
+    "Ends at %@" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slutter kl. %@"
+          }
+        }
+      }
+    },
+    "Every day" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hver dag"
+          }
+        }
+      }
+    },
+    "Everything stays on your iPhone. Still never sees which apps you use." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alt blir på iPhonen din. Still ser aldri hvilke apper du bruker."
+          }
+        }
+      }
+    },
+    "Free trial · %lld days left" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gratis prøveperiode · %lld dager igjen"
+          }
+        }
+      }
+    },
+    "Free trial · 1 day left" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gratis prøveperiode · 1 dag igjen"
+          }
+        }
+      }
+    },
+    "Get your time back." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Få tiden din tilbake."
+          }
+        }
+      }
+    },
+    "Give the schedule a name." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gi tidsplanen et navn."
+          }
+        }
+      }
+    },
+    "Go again" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En gang til"
+          }
+        }
+      }
+    },
+    "Hold for 5 seconds. A pause to ask: do I really need this?" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hold i 5 sekunder. En pause for å spørre: trenger jeg egentlig dette?"
+          }
+        }
+      }
+    },
+    "Hold to end early" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hold for å avslutte tidlig"
+          }
+        }
+      }
+    },
+    "Hours" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer"
+          }
+        }
+      }
+    },
+    "It's how Still locks apps for you. Nothing about your usage leaves this iPhone." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Det er slik Still låser apper for deg. Ingenting om bruken din forlater denne iPhonen."
+          }
+        }
+      }
+    },
+    "Last 7 days" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siste 7 dager"
+          }
+        }
+      }
+    },
+    "Lock whole categories or single apps." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lås hele kategorier eller enkeltapper."
+          }
+        }
+      }
+    },
+    "Lock your apps automatically, every week." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lås appene dine automatisk, hver uke."
+          }
+        }
+      }
+    },
+    "Locked during every session" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Låst i hver økt"
+          }
+        }
+      }
+    },
+    "Manage" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Administrer"
+          }
+        }
+      }
+    },
+    "Minutes" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minutter"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navn"
+          }
+        }
+      }
+    },
+    "Name, e.g. Mornings" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navn, f.eks. Morgener"
+          }
+        }
+      }
+    },
+    "New schedule" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ny tidsplan"
+          }
+        }
+      }
+    },
+    "Nights" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Natt"
+          }
+        }
+      }
+    },
+    "No active subscription was found for this Apple Account." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fant ikke noe aktivt abonnement for denne Apple-kontoen."
+          }
+        }
+      }
+    },
+    "No schedules yet." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen tidsplaner ennå."
+          }
+        }
+      }
+    },
+    "No way to end a session early" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen måte å avslutte en økt tidlig"
+          }
+        }
+      }
+    },
+    "Nothing selected yet. Choose the apps, categories or websites you want to lock." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingenting er valgt ennå. Velg appene, kategoriene eller nettstedene du vil låse."
+          }
+        }
+      }
+    },
+    "Notify when done" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varsle når ferdig"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "Off" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Av"
+          }
+        }
+      }
+    },
+    "Open Settings" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne Innstillinger"
+          }
+        }
+      }
+    },
+    "Open Settings → Screen Time" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne Innstillinger → Skjermtid"
+          }
+        }
+      }
+    },
+    "Phone and Messages always work" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefon og Meldinger fungerer alltid"
+          }
+        }
+      }
+    },
+    "Pick at least one day." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg minst én dag."
+          }
+        }
+      }
+    },
+    "Pick the apps that pull you in." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg appene som drar deg inn."
+          }
+        }
+      }
+    },
+    "Privacy" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personvern"
+          }
+        }
+      }
+    },
+    "Pro" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro"
+          }
+        }
+      }
+    },
+    "Rate Still" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vurder Still"
+          }
+        }
+      }
+    },
+    "Repeat" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gjenta"
+          }
+        }
+      }
+    },
+    "Restore purchases" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gjenopprett kjøp"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lagre"
+          }
+        }
+      }
+    },
+    "Schedules" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidsplaner"
+          }
+        }
+      }
+    },
+    "Schedules are at least 15 minutes." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En tidsplan varer minst 15 minutter."
+          }
+        }
+      }
+    },
+    "Schedules lock the apps you chose on Home. Choose some apps first." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidsplaner låser appene du valgte på Hjem. Velg noen apper først."
+          }
+        }
+      }
+    },
+    "Schedules run on their own, even when Still is closed. Manual sessions and schedules never cancel each other." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidsplaner kjører av seg selv, også når Still er lukket. Manuelle økter og tidsplaner avbryter aldri hverandre."
+          }
+        }
+      }
+    },
+    "Schedules that lock apps automatically" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidsplaner som låser apper automatisk"
+          }
+        }
+      }
+    },
+    "Screen Time couldn't schedule the session. Please try again." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skjermtid kunne ikke planlegge økten. Prøv igjen."
+          }
+        }
+      }
+    },
+    "Session complete" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Økten er fullført"
+          }
+        }
+      }
+    },
+    "Session ended" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Økten er avsluttet"
+          }
+        }
+      }
+    },
+    "Session ends at %@" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Økten slutter kl. %@"
+          }
+        }
+      }
+    },
+    "Session on" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Økt pågår"
+          }
+        }
+      }
+    },
+    "Sessions" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Økter"
+          }
+        }
+      }
+    },
+    "Sessions are at least 15 minutes." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En økt varer minst 15 minutter."
+          }
+        }
+      }
+    },
+    "Set %@" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruk %@"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Innstillinger"
+          }
+        }
+      }
+    },
+    "Shows your weekly insights." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viser ukeinnsikten din."
+          }
+        }
+      }
+    },
+    "Something went wrong" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noe gikk galt"
+          }
+        }
+      }
+    },
+    "Start a new session" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start en ny økt"
+          }
+        }
+      }
+    },
+    "Start session" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start økt"
+          }
+        }
+      }
+    },
+    "Starts" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starter"
+          }
+        }
+      }
+    },
+    "Step %lld of %lld" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steg %lld av %lld"
+          }
+        }
+      }
+    },
+    "Still %@ · Made in Bergen" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Still %@ · Laget i Bergen"
+          }
+        }
+      }
+    },
+    "Still Pro is active." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Still Pro er aktiv."
+          }
+        }
+      }
+    },
+    "Still needs Screen Time access" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Still trenger tilgang til Skjermtid"
+          }
+        }
+      }
+    },
+    "Strict mode" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Streng modus"
+          }
+        }
+      }
+    },
+    "Strict mode is on" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Streng modus er på"
+          }
+        }
+      }
+    },
+    "Strict mode with no way out" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Streng modus uten vei ut"
+          }
+        }
+      }
+    },
+    "Subscription" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abonnement"
+          }
+        }
+      }
+    },
+    "Tap once. They stay locked until the timer ends." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trykk én gang. De er låst til tiden er ute."
+          }
+        }
+      }
+    },
+    "Tap to pick apps and categories" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trykk for å velge apper og kategorier"
+          }
+        }
+      }
+    },
+    "Terms" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vilkår"
+          }
+        }
+      }
+    },
+    "This app can wait. Your session ends at %@." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne appen kan vente. Økten din slutter kl. %@."
+          }
+        }
+      }
+    },
+    "This session can't be ended early." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne økten kan ikke avsluttes tidlig."
+          }
+        }
+      }
+    },
+    "This week" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne uken"
+          }
+        }
+      }
+    },
+    "Too many schedules are on. Turn one off and try again." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For mange tidsplaner er på. Slå av én og prøv igjen."
+          }
+        }
+      }
+    },
+    "Touch and hold for 5 seconds." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trykk og hold i 5 sekunder."
+          }
+        }
+      }
+    },
+    "Try Still Pro free for 7 days." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prøv Still Pro gratis i 7 dager."
+          }
+        }
+      }
+    },
+    "Try again" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prøv igjen"
+          }
+        }
+      }
+    },
+    "Try free" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prøv gratis"
+          }
+        }
+      }
+    },
+    "Try it free for 7 days" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prøv gratis i 7 dager"
+          }
+        }
+      }
+    },
+    "Weekdays" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hverdager"
+          }
+        }
+      }
+    },
+    "Weekends" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helger"
+          }
+        }
+      }
+    },
+    "Weekly insights and streaks" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukentlig innsikt og rekker"
+          }
+        }
+      }
+    },
+    "What pulls you in?" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hva drar deg inn?"
+          }
+        }
+      }
+    },
+    "You chose this at %@." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du valgte dette kl. %@."
+          }
+        }
+      }
+    },
+    "You stayed still for %@. That still counts." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du var still i %@. Det teller likevel."
+          }
+        }
+      }
+    },
+    "You took a pause. That still counts." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du tok en pause. Det teller likevel."
+          }
+        }
+      }
+    },
+    "Your apps are back." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appene dine er tilbake."
+          }
+        }
+      }
+    },
+    "Your apps are back. %lld day streak." : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Your apps are back. %lld day streak."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Your apps are back. %lld day streak."
+                }
+              }
+            }
+          }
+        },
+        "nb" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Appene dine er tilbake. %lld dag på rad."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Appene dine er tilbake. %lld dager på rad."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Your apps are back. Use them on purpose." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appene dine er tilbake. Bruk dem med vilje."
+          }
+        }
+      }
+    },
+    "Your phone,\n%@" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefonen din,\n%@"
+          }
+        }
+      }
+    },
+    "and %lld more" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "og %lld til"
+          }
+        }
+      }
+    },
+    "app locked" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "app låst"
+          }
+        }
+      }
+    },
+    "apps & categories locked" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "apper og kategorier låst"
+          }
+        }
+      }
+    },
+    "apps locked" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "apper låst"
+          }
+        }
+      }
+    },
+    "categories locked" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kategorier låst"
+          }
+        }
+      }
+    },
+    "category locked" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kategori låst"
+          }
+        }
+      }
+    },
+    "daily average" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "snitt per dag"
+          }
+        }
+      }
+    },
+    "ends %@" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "slutter %@"
+          }
+        }
+      }
+    },
+    "quieter." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "roligere."
+          }
+        }
+      }
+    },
+    "reclaimed" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tatt tilbake"
+          }
+        }
+      }
+    },
+    "reclaimed · %lld day streak" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "reclaimed · %lld day streak"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "reclaimed · %lld day streak"
+                }
+              }
+            }
+          }
+        },
+        "nb" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "tatt tilbake · %lld dag på rad"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "tatt tilbake · %lld dager på rad"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "session" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "økt"
+          }
+        }
+      }
+    },
+    "sessions" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "økter"
+          }
+        }
+      }
+    },
+    "streak" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "på rad"
+          }
+        }
+      }
+    },
+    "this week" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "denne uken"
+          }
+        }
+      }
+    },
+    "until your apps return" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "til appene dine er tilbake"
+          }
+        }
+      }
+    },
+    "urge resisted" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fristelse motstått"
+          }
+        }
+      }
+    },
+    "urges resisted" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fristelser motstått"
+          }
+        }
+      }
+    },
+    "website locked" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nettsted låst"
+          }
+        }
+      }
+    },
+    "websites locked" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nettsteder låst"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
