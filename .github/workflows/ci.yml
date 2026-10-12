@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+    paths-ignore: ['AppStore/screenshots/**', 'Design/review/**']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core-linux:
+    name: StillCore tests (Linux)
+    runs-on: ubuntu-latest
+    container: swift:6.1
+    steps:
+      - uses: actions/checkout@v4
+      - run: swift test --package-path StillKit
+
+  ios:
+    name: Build and test (Xcode)
+    runs-on: macos-26
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          ls -d /Applications/Xcode*.app
+          XC="$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)"
+          if [ -n "$XC" ]; then sudo xcode-select -s "$XC"; fi
+          xcodebuild -version
+          xcrun simctl list runtimes
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate project
+        run: |
+          xcodegen generate
+          git diff --stat -- Still.xcodeproj || true
+
+      - name: Build for device (Release, unsigned)
+        run: |
+          set -o pipefail
+          xcodebuild -project Still.xcodeproj -scheme Still \
+            -destination 'generic/platform=iOS' -configuration Release \
+            CODE_SIGNING_ALLOWED=NO build 2>&1 | tee build-release.log | grep -E "(error|warning):|BUILD (SUCCEEDED|FAILED)" | sort -u
+
+      - name: Pick simulator
+        id: sim
+        run: |
+          NAME="$(xcrun simctl list devices available | grep -oE 'iPhone 1[6-9] Pro( Max)?' | sort -u | tail -1)"
+          [ -z "$NAME" ] && NAME="$(xcrun simctl list devices available | grep -oE 'iPhone [0-9]+[A-Za-z ]*' | head -1 | sed 's/ *$//')"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "Using $NAME"
+
+      - name: Test (unit, StoreKit, UI)
+        run: |
+          set -o pipefail
+          xcodebuild test -project Still.xcodeproj -scheme Still \
+            -destination "platform=iOS Simulator,name=${{ steps.sim.outputs.name }}" \
+            -skip-testing:StillUITests/ScreenshotTests \
+            -skip-testing:StillUITests/ReviewScreenshotTests \
+            -resultBundlePath TestResults.xcresult 2>&1 | tee test.log | grep -E "(error|warning):|Test Case .*(passed|failed)|Executed|TEST (SUCCEEDED|FAILED)"
+
+      - name: Test summary
+        if: always()
+        run: |
+          grep -E "Test Case .*failed" test.log || true
+          grep -E "Executed [0-9]+ tests" test.log | tail -5 || true
+          grep -E "error:" build-release.log | sort -u | head -50 || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: |
+            TestResults.xcresult
+            build-release.log
+            test.log
+          retention-days: 7
