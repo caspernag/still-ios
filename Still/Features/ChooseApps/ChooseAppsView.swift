@@ -22,7 +22,7 @@ struct ChooseAppsView: View {
                     LogoLockup()
                 } else {
                     CircleIconButton(systemImage: "chevron.left", accessibilityLabel: "Back") {
-                        model.finishChoosingApps()
+                        model.cancelChoosingApps()
                     }
                 }
             } trailing: {

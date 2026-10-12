@@ -132,7 +132,7 @@ struct SettingsView: View {
                         }
                     }
                     StillDivider()
-                    linkRow("Rate Still") { requestReview() }
+                    linkRow("Rate Still") { rate() }
                 }
             }
 
@@ -180,7 +180,7 @@ struct SettingsView: View {
                     model.sheet = .paywall
                 }
             } label: {
-                (entitlements.isPro ? Text("Manage") : Text("Try free"))
+                (entitlements.isPro ? Text("Manage") : (entitlements.isTrialEligible ? Text("Try free") : Text("Upgrade")))
                     .stillFont(.subheadline)
                     .foregroundStyle(StillColor.ink)
                     .frame(minHeight: 44)
@@ -200,7 +200,7 @@ struct SettingsView: View {
         case .active:
             String(localized: "Active")
         case .free, .expired:
-            String(localized: "Try it free for 7 days")
+            entitlements.isTrialEligible ? String(localized: "Try it free for 7 days") : String(localized: "Not subscribed")
         }
     }
 
@@ -232,6 +232,17 @@ struct SettingsView: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+    }
+
+    /// Opens the App Store review page once the app's App Store ID is set;
+    /// until then (e.g. TestFlight) falls back to the in-app prompt.
+    private func rate() {
+        if let id = StillConstants.appStoreID,
+           let url = URL(string: "https://apps.apple.com/app/id\(id)?action=write-review") {
+            openURL(url)
+        } else {
+            requestReview()
+        }
     }
 
     private func restore() async {

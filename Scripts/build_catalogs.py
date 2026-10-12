@@ -112,8 +112,15 @@ APP = {
     "Get your time back.": "Få tiden din tilbake.",
     "Try Still Pro free for 7 days.": "Prøv Still Pro gratis i 7 dager.",
     "Schedules that lock apps automatically": "Tidsplaner som låser apper automatisk",
-    "Strict mode with no way out": "Streng modus uten vei ut",
-    "Weekly insights and streaks": "Ukentlig innsikt og rekker",
+    "Strict mode: no ending early": "Streng modus: ingen tidlig avslutning",
+    "Weekly insights": "Ukentlig innsikt",
+    "Unlock everything in Still Pro.": "Lås opp alt i Still Pro.",
+    "Upgrade": "Oppgrader",
+    "Not subscribed": "Ikke abonnent",
+    "Screen Time couldn't update your schedules. Please try again.":
+        "Skjermtid kunne ikke oppdatere tidsplanene dine. Prøv igjen.",
+    "Notifications are off for Still. Turn them on in Settings → Notifications → Still.":
+        "Varslinger er av for Still. Slå dem på i Innstillinger → Varslinger → Still.",
     "Custom session lengths": "Egne øktlengder",
     # Settings
     "Subscription": "Abonnement",
@@ -199,7 +206,7 @@ DESIGN_SYSTEM = {
     "Done": "Ferdig",
     "Session complete": "Økten er fullført",
     "Step %lld of %lld": "Steg %lld av %lld",
-    "Touch and hold for 5 seconds.": "Trykk og hold i 5 sekunder.",
+    "Touch and hold for %lld seconds.": "Trykk og hold i %lld sekunder.",
     "Your apps are back.": "Appene dine er tilbake.",
     "ends %@": "slutter %@",
 }

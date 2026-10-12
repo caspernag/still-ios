@@ -62,7 +62,9 @@ public struct SessionEngine: Sendable {
         guard store.appendRecord(record) else { return nil }
         if outcome == .completed {
             var flags = store.flags
-            flags.completedSessionCount += 1
+            // Derived from the history (not incremented), so the app and the monitor
+            // finalizing at the same moment can never count a session twice.
+            flags.completedSessionCount = store.history.filter { $0.outcome == .completed }.count
             flags.unseenCompletionID = record.id
             store.flags = flags
         }

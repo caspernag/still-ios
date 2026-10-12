@@ -11,12 +11,16 @@ final class Entitlements {
     private(set) var status: ProStatus = .free
     /// False until the first entitlement check has finished.
     private(set) var isLoaded = false
+    /// Whether this Apple Account can still get the 7-day free trial.
+    private(set) var isTrialEligible = true
 
     private let forcedStatus: ProStatus?
+    private let store: SharedStore
     @ObservationIgnored private var updatesTask: Task<Void, Never>?
 
-    init(forcedStatus: ProStatus? = nil) {
+    init(forcedStatus: ProStatus? = nil, store: SharedStore = .shared) {
         self.forcedStatus = forcedStatus
+        self.store = store
         if let forcedStatus {
             status = forcedStatus
             isLoaded = true
@@ -46,6 +50,7 @@ final class Entitlements {
         guard forcedStatus == nil else { return }
         let now = Date()
         var best: ProStatus = .free
+        var activeUntil: Date?
 
         for await result in Transaction.currentEntitlements {
             guard case .verified(let transaction) = result,
@@ -53,6 +58,7 @@ final class Entitlements {
                   transaction.revocationDate == nil
             else { continue }
             if let expiration = transaction.expirationDate, expiration < now { continue }
+            activeUntil = max(activeUntil ?? .distantPast, transaction.expirationDate ?? .distantFuture)
 
             if Self.isIntroductoryOffer(transaction), let expiration = transaction.expirationDate {
                 if best != .active {
@@ -64,6 +70,13 @@ final class Entitlements {
         }
         status = best
         isLoaded = true
+        // Lets the monitor extension stop schedules after Pro lapses.
+        store.proActiveUntil = activeUntil
+
+        if let product = try? await Product.products(for: [StillConstants.Products.yearly]).first,
+           let subscription = product.subscription {
+            isTrialEligible = await subscription.isEligibleForIntroOffer
+        }
     }
 
     private static func isIntroductoryOffer(_ transaction: Transaction) -> Bool {

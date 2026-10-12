@@ -11,7 +11,7 @@ struct PaywallView: View {
 
     var body: some View {
         SubscriptionStoreView(productIDs: StillConstants.Products.all) {
-            PaywallHeader()
+            PaywallHeader(isTrialEligible: entitlements.isTrialEligible)
         }
         .subscriptionStoreControlStyle(.picker)
         .subscriptionStoreButtonLabel(.multiline)
@@ -42,6 +42,8 @@ struct PaywallView: View {
 
 /// Icon, "Get your time back.", "Try Still Pro free for 7 days." and the three Pro features.
 private struct PaywallHeader: View {
+    let isTrialEligible: Bool
+
     var body: some View {
         VStack(spacing: 22) {
             VStack(spacing: 18) {
@@ -53,7 +55,7 @@ private struct PaywallHeader: View {
                         .foregroundStyle(StillColor.ink)
                         .multilineTextAlignment(.center)
                         .accessibilityAddTraits(.isHeader)
-                    Text("Try Still Pro free for 7 days.")
+                    (isTrialEligible ? Text("Try Still Pro free for 7 days.") : Text("Unlock everything in Still Pro."))
                         .stillFont(.subheadline)
                         .foregroundStyle(StillColor.inkSecondary)
                         .multilineTextAlignment(.center)
@@ -64,9 +66,9 @@ private struct PaywallHeader: View {
                 VStack(spacing: 0) {
                     feature("clock", "Schedules that lock apps automatically")
                     StillDivider(leadingInset: 56)
-                    feature("lock", "Strict mode with no way out")
+                    feature("lock", "Strict mode: no ending early")
                     StillDivider(leadingInset: 56)
-                    feature("chart.bar", "Weekly insights and streaks")
+                    feature("chart.bar", "Weekly insights")
                     StillDivider(leadingInset: 56)
                     feature("timer", "Custom session lengths")
                 }

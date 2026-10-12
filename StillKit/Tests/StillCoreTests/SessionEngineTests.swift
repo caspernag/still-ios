@@ -145,6 +145,27 @@ final class SessionEngineTests: XCTestCase {
         XCTAssertEqual(record.urgesResisted, 2)
     }
 
+    func testCompletedCountComesFromHistory() throws {
+        let store = makeStore()
+        let engine = SessionEngine(store: store)
+        let session = try engine.start(minutes: 15, isStrict: false, now: t0)
+        // Simulate the other process having recorded the same completion already.
+        engine.finalize(sessionID: session.id, outcome: .completed, at: session.end)
+        store.activeSession = session
+        XCTAssertNil(engine.finalize(sessionID: session.id, outcome: .completed, at: session.end))
+        XCTAssertEqual(store.flags.completedSessionCount, 1)
+        XCTAssertEqual(store.history.count, 1)
+    }
+
+    func testSchedulesAllowedFollowsProWithGrace() {
+        let store = makeStore()
+        XCTAssertFalse(store.schedulesAllowed(at: t0))
+        store.proActiveUntil = t0.addingTimeInterval(86_400)
+        XCTAssertTrue(store.schedulesAllowed(at: t0))
+        XCTAssertTrue(store.schedulesAllowed(at: t0.addingTimeInterval(3 * 86_400)))
+        XCTAssertFalse(store.schedulesAllowed(at: t0.addingTimeInterval(4 * 86_400 + 1)))
+    }
+
     func testOldUrgesArePruned() {
         let store = makeStore()
         store.recordUrge(at: t0)

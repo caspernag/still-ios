@@ -23,7 +23,7 @@ func date(_ year: Int, _ month: Int, _ day: Int, _ hour: Int = 12, _ minute: Int
 }
 
 /// A finished record that started at `start` and lasted `minutes`.
-func record(
+func makeRecord(
     start: Date,
     minutes: Double,
     planned: Double? = nil,

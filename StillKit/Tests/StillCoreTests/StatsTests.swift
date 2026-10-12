@@ -6,17 +6,17 @@ final class StatsTests: XCTestCase {
 
     func testStreakCountsConsecutiveDays() {
         let records = [
-            record(start: date(2026, 10, 10, 9, in: oslo), minutes: 30),
-            record(start: date(2026, 10, 11, 21, in: oslo), minutes: 15),
-            record(start: date(2026, 10, 12, 8, in: oslo), minutes: 60),
+            makeRecord(start: date(2026, 10, 10, 9, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 11, 21, in: oslo), minutes: 15),
+            makeRecord(start: date(2026, 10, 12, 8, in: oslo), minutes: 60),
         ]
         XCTAssertEqual(Stats.streak(records: records, now: date(2026, 10, 12, 20, in: oslo), calendar: oslo), 3)
     }
 
     func testStreakSurvivesUntilEndOfNextDay() {
         let records = [
-            record(start: date(2026, 10, 10, 9, in: oslo), minutes: 30),
-            record(start: date(2026, 10, 11, 9, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 10, 9, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 11, 9, in: oslo), minutes: 30),
         ]
         // Nothing yet today: the streak from yesterday still stands.
         XCTAssertEqual(Stats.streak(records: records, now: date(2026, 10, 12, 23, 59, in: oslo), calendar: oslo), 2)
@@ -26,26 +26,26 @@ final class StatsTests: XCTestCase {
 
     func testGapBreaksStreak() {
         let records = [
-            record(start: date(2026, 10, 8, in: oslo), minutes: 30),
-            record(start: date(2026, 10, 10, in: oslo), minutes: 30),
-            record(start: date(2026, 10, 11, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 8, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 10, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 11, in: oslo), minutes: 30),
         ]
         XCTAssertEqual(Stats.streak(records: records, now: date(2026, 10, 11, 18, in: oslo), calendar: oslo), 2)
     }
 
     func testMultipleSessionsSameDayCountOnce() {
         let records = [
-            record(start: date(2026, 10, 12, 8, in: oslo), minutes: 30),
-            record(start: date(2026, 10, 12, 12, in: oslo), minutes: 30),
-            record(start: date(2026, 10, 12, 18, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 12, 8, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 12, 12, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 12, 18, in: oslo), minutes: 30),
         ]
         XCTAssertEqual(Stats.streak(records: records, now: date(2026, 10, 12, 20, in: oslo), calendar: oslo), 1)
     }
 
     func testEarlyEndsUnderTenMinutesDoNotCount() {
         let records = [
-            record(start: date(2026, 10, 11, in: oslo), minutes: 9, planned: 30, outcome: .endedEarly),
-            record(start: date(2026, 10, 12, in: oslo), minutes: 10, planned: 30, outcome: .endedEarly),
+            makeRecord(start: date(2026, 10, 11, in: oslo), minutes: 9, planned: 30, outcome: .endedEarly),
+            makeRecord(start: date(2026, 10, 12, in: oslo), minutes: 10, planned: 30, outcome: .endedEarly),
         ]
         XCTAssertEqual(Stats.streak(records: records, now: date(2026, 10, 12, 20, in: oslo), calendar: oslo), 1)
     }
@@ -56,8 +56,8 @@ final class StatsTests: XCTestCase {
 
     func testStreakFollowsTheCalendarsTimeZone() {
         // 23:30 in Oslo on Oct 10 and 23:30 in Oslo on Oct 11 (UTC+2 in October).
-        let first = record(start: date(2026, 10, 10, 23, 30, in: oslo), minutes: 20)
-        let second = record(start: date(2026, 10, 11, 23, 30, in: oslo), minutes: 20)
+        let first = makeRecord(start: date(2026, 10, 10, 23, 30, in: oslo), minutes: 20)
+        let second = makeRecord(start: date(2026, 10, 11, 23, 30, in: oslo), minutes: 20)
         let now = date(2026, 10, 12, 9, in: oslo)
 
         // In Oslo these are two consecutive days (Oct 10 and 11), still alive on Oct 12.
@@ -77,18 +77,18 @@ final class StatsTests: XCTestCase {
     func testStreakAcrossDaylightSavingChange() {
         // Norway leaves summer time on Oct 25, 2026 (a 25-hour day).
         let records = [
-            record(start: date(2026, 10, 24, 22, in: oslo), minutes: 30),
-            record(start: date(2026, 10, 25, 22, in: oslo), minutes: 30),
-            record(start: date(2026, 10, 26, 22, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 24, 22, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 25, 22, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 26, 22, in: oslo), minutes: 30),
         ]
         XCTAssertEqual(Stats.streak(records: records, now: date(2026, 10, 26, 23, in: oslo), calendar: oslo), 3)
     }
 
     func testReclaimedIncludesPartialMinutesFromEarlyEnds() {
         let records = [
-            record(start: date(2026, 10, 12, 8, in: oslo), minutes: 30),
-            record(start: date(2026, 10, 12, 10, in: oslo), minutes: 12.5, planned: 60, outcome: .endedEarly),
-            record(start: date(2026, 10, 12, 12, in: oslo), minutes: 0.5, planned: 60, outcome: .endedEarly),
+            makeRecord(start: date(2026, 10, 12, 8, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 12, 10, in: oslo), minutes: 12.5, planned: 60, outcome: .endedEarly),
+            makeRecord(start: date(2026, 10, 12, 12, in: oslo), minutes: 0.5, planned: 60, outcome: .endedEarly),
         ]
         XCTAssertEqual(Stats.reclaimedSeconds(records: records), 30 * 60 + 12.5 * 60 + 30, accuracy: 0.001)
         XCTAssertEqual(Int(Stats.reclaimedSeconds(records: records) / 60), 43)
@@ -106,9 +106,9 @@ final class StatsTests: XCTestCase {
     func testThisWeekUsesMondayAsFirstDayInNorway() {
         // Oct 12, 2026 is a Monday.
         let records = [
-            record(start: date(2026, 10, 11, 20, in: oslo), minutes: 60), // Sunday, last week
-            record(start: date(2026, 10, 12, 8, in: oslo), minutes: 30), // Monday
-            record(start: date(2026, 10, 14, 8, in: oslo), minutes: 15), // Wednesday
+            makeRecord(start: date(2026, 10, 11, 20, in: oslo), minutes: 60), // Sunday, last week
+            makeRecord(start: date(2026, 10, 12, 8, in: oslo), minutes: 30), // Monday
+            makeRecord(start: date(2026, 10, 14, 8, in: oslo), minutes: 15), // Wednesday
         ]
         let seconds = Stats.thisWeekSeconds(records: records, now: date(2026, 10, 14, 20, in: oslo), calendar: oslo)
         XCTAssertEqual(seconds, 45 * 60, accuracy: 0.001)
@@ -125,10 +125,10 @@ final class StatsTests: XCTestCase {
     func testDailyTotalsCoverSevenDaysOldestFirst() {
         let now = date(2026, 10, 12, 20, in: oslo)
         let records = [
-            record(start: date(2026, 10, 12, 8, in: oslo), minutes: 30),
-            record(start: date(2026, 10, 12, 9, in: oslo), minutes: 15),
-            record(start: date(2026, 10, 6, 9, in: oslo), minutes: 60),
-            record(start: date(2026, 10, 5, 9, in: oslo), minutes: 60), // 8 days ago: outside
+            makeRecord(start: date(2026, 10, 12, 8, in: oslo), minutes: 30),
+            makeRecord(start: date(2026, 10, 12, 9, in: oslo), minutes: 15),
+            makeRecord(start: date(2026, 10, 6, 9, in: oslo), minutes: 60),
+            makeRecord(start: date(2026, 10, 5, 9, in: oslo), minutes: 60), // 8 days ago: outside
         ]
         let totals = Stats.dailyTotals(records: records, days: 7, now: now, calendar: oslo)
         XCTAssertEqual(totals.count, 7)
@@ -149,7 +149,7 @@ final class StatsTests: XCTestCase {
         let events = [date(2026, 10, 5, 23, in: oslo), date(2026, 10, 6, 1, in: oslo), date(2026, 10, 12, 19, in: oslo)]
         XCTAssertEqual(Stats.urges(events: events, in: interval), 2)
 
-        let records = [record(start: date(2026, 10, 6, 9, in: oslo), minutes: 30), record(start: date(2026, 10, 1, in: oslo), minutes: 30)]
+        let records = [makeRecord(start: date(2026, 10, 6, 9, in: oslo), minutes: 30), makeRecord(start: date(2026, 10, 1, in: oslo), minutes: 30)]
         XCTAssertEqual(Stats.sessionCount(records: records, in: interval), 1)
     }
 }

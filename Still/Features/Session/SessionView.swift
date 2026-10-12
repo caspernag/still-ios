@@ -78,7 +78,8 @@ struct SessionView: View {
     private func waitForEnd(of session: Session) async {
         let remaining = SessionMath.remaining(session, now: clock.now)
         if remaining > 0 {
-            try? await Task.sleep(for: .seconds(remaining + 0.5))
+            // A short delay lets the monitor extension finalize first; finalizing is idempotent.
+            try? await Task.sleep(for: .seconds(remaining + 2))
         }
         guard !Task.isCancelled else { return }
         model.reconcile()

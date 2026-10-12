@@ -1,3 +1,4 @@
+import Combine
 import FamilyControls
 import Foundation
 import StillKit
@@ -13,6 +14,8 @@ enum ScreenTimeAuthorization: Equatable, Sendable {
 @MainActor
 protocol ScreenTimeService: AnyObject {
     var authorization: ScreenTimeAuthorization { get }
+    /// Called whenever the system reports a new authorization status.
+    var onAuthorizationChange: (@MainActor () -> Void)? { get set }
     func refreshAuthorization()
     func requestAuthorization() async throws
 
@@ -32,16 +35,33 @@ protocol ScreenTimeService: AnyObject {
 @MainActor
 final class LiveScreenTimeService: ScreenTimeService {
     private(set) var authorization: ScreenTimeAuthorization = .notDetermined
+    var onAuthorizationChange: (@MainActor () -> Void)?
+    private var subscription: AnyCancellable?
 
     init() {
         refreshAuthorization()
+        // The status can settle a moment after launch; follow it instead of reading it once.
+        subscription = AuthorizationCenter.shared.$authorizationStatus
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                MainActor.assumeIsolated {
+                    guard let self else { return }
+                    self.authorization = Self.map(status)
+                    self.onAuthorizationChange?()
+                }
+            }
     }
 
     func refreshAuthorization() {
-        switch AuthorizationCenter.shared.authorizationStatus {
-        case .approved: authorization = .approved
-        case .denied: authorization = .denied
-        default: authorization = .notDetermined
+        authorization = Self.map(AuthorizationCenter.shared.authorizationStatus)
+    }
+
+    /// Any approved variant (iOS 26.4 added one with data access) counts as approved.
+    private static func map(_ status: AuthorizationStatus) -> ScreenTimeAuthorization {
+        switch status {
+        case .notDetermined: .notDetermined
+        case .denied: .denied
+        default: .approved
         }
     }
 
@@ -87,6 +107,7 @@ final class LiveScreenTimeService: ScreenTimeService {
 /// Demo mode: authorization is granted instantly and no system calls are made.
 @MainActor
 final class DemoScreenTimeService: ScreenTimeService {
+    var onAuthorizationChange: (@MainActor () -> Void)?
     private(set) var authorization: ScreenTimeAuthorization
     private(set) var sessionShieldActive = false
     private(set) var monitoredSessions = Set<UUID>()

@@ -26,8 +26,9 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
             Shields.apply(SelectionStorage.load(from: store), to: .stillSession)
 
         case .schedule(let id, _)?:
+            // Schedules are Pro: stop locking once the subscription has lapsed.
             guard let schedule = store.schedules.first(where: { $0.id == id }), schedule.isEnabled,
-                  !store.selectionSummary.isEmpty
+                  !store.selectionSummary.isEmpty, store.schedulesAllowed(at: Date())
             else { return }
             Shields.apply(SelectionStorage.load(from: store), to: .stillSchedule(id))
 

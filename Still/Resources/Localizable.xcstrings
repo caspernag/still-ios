@@ -691,12 +691,32 @@
         }
       }
     },
+    "Not subscribed" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke abonnent"
+          }
+        }
+      }
+    },
     "Nothing selected yet. Choose the apps, categories or websites you want to lock." : {
       "localizations" : {
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ingenting er valgt ennå. Velg appene, kategoriene eller nettstedene du vil låse."
+          }
+        }
+      }
+    },
+    "Notifications are off for Still. Turn them on in Settings → Notifications → Still." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varslinger er av for Still. Slå dem på i Innstillinger → Varslinger → Still."
           }
         }
       }
@@ -901,6 +921,16 @@
         }
       }
     },
+    "Screen Time couldn't update your schedules. Please try again." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skjermtid kunne ikke oppdatere tidsplanene dine. Prøv igjen."
+          }
+        }
+      }
+    },
     "Session complete" : {
       "localizations" : {
         "nb" : {
@@ -1091,12 +1121,12 @@
         }
       }
     },
-    "Strict mode with no way out" : {
+    "Strict mode: no ending early" : {
       "localizations" : {
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Streng modus uten vei ut"
+            "value" : "Streng modus: ingen tidlig avslutning"
           }
         }
       }
@@ -1181,12 +1211,12 @@
         }
       }
     },
-    "Touch and hold for 5 seconds." : {
+    "Touch and hold for %lld seconds." : {
       "localizations" : {
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trykk og hold i 5 sekunder."
+            "value" : "Trykk og hold i %lld sekunder."
           }
         }
       }
@@ -1231,6 +1261,26 @@
         }
       }
     },
+    "Unlock everything in Still Pro." : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lås opp alt i Still Pro."
+          }
+        }
+      }
+    },
+    "Upgrade" : {
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppgrader"
+          }
+        }
+      }
+    },
     "Weekdays" : {
       "localizations" : {
         "nb" : {
@@ -1251,12 +1301,12 @@
         }
       }
     },
-    "Weekly insights and streaks" : {
+    "Weekly insights" : {
       "localizations" : {
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ukentlig innsikt og rekker"
+            "value" : "Ukentlig innsikt"
           }
         }
       }

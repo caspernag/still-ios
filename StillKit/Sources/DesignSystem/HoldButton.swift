@@ -52,7 +52,7 @@ public struct HoldButton: View {
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(Text(title))
             .accessibilityAddTraits(.isButton)
-            .accessibilityHint(Text("Touch and hold for 5 seconds."))
+            .accessibilityHint(Text("Touch and hold for \(Int(duration)) seconds."))
     }
 
     private func pressingChanged(_ pressing: Bool) {

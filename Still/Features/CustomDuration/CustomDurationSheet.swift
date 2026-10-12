@@ -69,6 +69,10 @@ struct CustomDurationSheet: View {
             .onChange(of: hours) { _, newHours in
                 if newHours == 12 { minutes = 0 }
             }
+            .onChange(of: minutes) { _, newMinutes in
+                // 12 hours is the maximum; the wheels never show more than will be set.
+                if hours == 12 && newMinutes != 0 { minutes = 0 }
+            }
 
             Group {
                 if hours * 60 + minutes < StillConstants.minimumSessionMinutes {

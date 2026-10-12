@@ -60,6 +60,7 @@ public enum ActivityScheduler {
         if !scheduleActivities.isEmpty { center.stopMonitoring(scheduleActivities) }
 
         var monitored = Set<UUID>()
+        var firstError: Error?
         for schedule in schedules where schedule.isEnabled {
             for interval in ScheduleMapping.intervals(for: schedule) {
                 let deviceSchedule = DeviceActivitySchedule(
@@ -67,10 +68,16 @@ public enum ActivityScheduler {
                     intervalEnd: interval.intervalEnd,
                     repeats: interval.repeats
                 )
-                try center.startMonitoring(DeviceActivityName(interval.activityName), during: deviceSchedule)
-                monitored.insert(schedule.id)
+                do {
+                    // One failing interval must not leave the other schedules unregistered.
+                    try center.startMonitoring(DeviceActivityName(interval.activityName), during: deviceSchedule)
+                    monitored.insert(schedule.id)
+                } catch {
+                    firstError = firstError ?? error
+                }
             }
         }
+        if let firstError { throw firstError }
         return previouslyMonitored.subtracting(monitored)
     }
 }

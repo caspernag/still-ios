@@ -41,12 +41,12 @@
         }
       }
     },
-    "Touch and hold for 5 seconds." : {
+    "Touch and hold for %lld seconds." : {
       "localizations" : {
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trykk og hold i 5 sekunder."
+            "value" : "Trykk og hold i %lld sekunder."
           }
         }
       }

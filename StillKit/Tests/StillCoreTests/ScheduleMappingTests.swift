@@ -126,6 +126,18 @@ final class ScheduleMappingTests: XCTestCase {
         XCTAssertNil(ScheduleMapping.activeSchedule(in: [nights], at: date(2026, 10, 12, 22, 30, in: oslo), calendar: oslo))
     }
 
+    func testAllOverlappingSchedulesAreActive() {
+        let oslo = calendar("Europe/Oslo")
+        var nights = StillSchedule.nightsExample()
+        nights.isEnabled = true
+        let evening = StillSchedule(
+            name: "Evening", start: TimeOfDay(hour: 21, minute: 0), end: TimeOfDay(hour: 23, minute: 0),
+            weekdays: Set(Weekday.allCases), isEnabled: true
+        )
+        let active = ScheduleMapping.activeSchedules(in: [nights, evening], at: date(2026, 10, 12, 22, 30, in: oslo), calendar: oslo)
+        XCTAssertEqual(Set(active.map(\.schedule.id)), [nights.id, evening.id])
+    }
+
     func testWeekdayOrdering() {
         XCTAssertEqual(Weekday.ordered(firstWeekday: 2).first, .monday)
         XCTAssertEqual(Weekday.ordered(firstWeekday: 2).last, .sunday)

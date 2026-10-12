@@ -23,6 +23,10 @@ public enum StillConstants {
     /// One slot is always kept free for a manual session.
     public static let maximumMonitoredActivities = 20
 
+    /// The numeric App Store ID (App Store Connect → App Information → Apple ID).
+    /// Set it after creating the app so "Rate Still" opens the review page.
+    public static let appStoreID: String? = nil
+
     public static let supportEmail = "casper@nagsoftware.no"
     public static let privacyURL = URL(string: "https://nagsoftware.no/still/privacy")!
     public static let termsURL = URL(string: "https://nagsoftware.no/still/terms")!

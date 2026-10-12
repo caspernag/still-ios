@@ -29,13 +29,12 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
         let store = SharedStore.shared
         let now = Date()
         var subtitle = String(localized: "This app can wait.")
-        var footnote: String?
 
         if let session = store.activeSession, !SessionMath.isExpired(session, now: now) {
             let end = Self.time(session.end)
-            subtitle = String(localized: "This app can wait. Your session ends at \(end).")
             let start = Self.time(session.start)
-            footnote = String(localized: "You chose this at \(start).")
+            let chose = String(localized: "You chose this at \(start).")
+            subtitle = String(localized: "This app can wait. Your session ends at \(end).") + "\n\n" + chose
         } else if let active = ScheduleMapping.activeSchedule(in: store.schedules, at: now, calendar: .current) {
             let end = Self.time(active.end)
             let name = active.schedule.name
@@ -50,7 +49,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             subtitle: ShieldConfiguration.Label(text: subtitle, color: StillPalette.inkSecondary),
             primaryButtonLabel: ShieldConfiguration.Label(text: String(localized: "Close"), color: StillPalette.onPrimary),
             primaryButtonBackgroundColor: StillPalette.primaryBottom,
-            secondaryButtonLabel: footnote.map { ShieldConfiguration.Label(text: $0, color: StillPalette.inkSecondary) }
+            secondaryButtonLabel: nil
         )
     }
 

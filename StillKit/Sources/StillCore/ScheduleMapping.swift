@@ -71,7 +71,18 @@ public enum ScheduleMapping {
         activityCount(schedules) <= StillConstants.maximumMonitoredActivities - 1
     }
 
-    /// The enabled schedule that is active at `date`, with the end of its current occurrence.
+    /// Every enabled schedule that is active at `date`, with the end of its current occurrence.
+    public static func activeSchedules(
+        in schedules: [StillSchedule],
+        at date: Date,
+        calendar: Calendar
+    ) -> [(schedule: StillSchedule, end: Date)] {
+        schedules.filter(\.isEnabled).compactMap { schedule in
+            schedule.occurrenceEnd(containing: date, calendar: calendar).map { (schedule, $0) }
+        }
+    }
+
+    /// The first enabled schedule that is active at `date`, with the end of its current occurrence.
     public static func activeSchedule(
         in schedules: [StillSchedule],
         at date: Date,

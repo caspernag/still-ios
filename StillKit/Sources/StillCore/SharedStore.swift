@@ -58,6 +58,7 @@ public final class SharedStore: @unchecked Sendable {
         case selection = "still.selection"
         case selectionSummary = "still.selectionSummary"
         case urgeEvents = "still.urgeEvents"
+        case proActiveUntil = "still.proActiveUntil"
     }
 
     public let defaults: UserDefaults
@@ -149,6 +150,20 @@ public final class SharedStore: @unchecked Sendable {
     public var selectionSummary: SelectionSummary {
         get { value(SelectionSummary.self, for: .selectionSummary) ?? SelectionSummary() }
         set { set(newValue, for: .selectionSummary) }
+    }
+
+    /// When the current Still Pro period ends (written by the app). The monitor extension
+    /// uses it so schedules stop locking after Pro lapses, even if the app isn't opened.
+    public var proActiveUntil: Date? {
+        get { value(Date.self, for: .proActiveUntil) }
+        set { set(newValue, for: .proActiveUntil) }
+    }
+
+    /// Whether schedules may run at `date`. Allows a 3-day grace period, because
+    /// renewals are only seen when the app runs.
+    public func schedulesAllowed(at date: Date) -> Bool {
+        guard let until = proActiveUntil else { return false }
+        return until.addingTimeInterval(3 * 86_400) > date
     }
 
     // MARK: Urges

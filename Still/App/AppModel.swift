@@ -55,6 +55,8 @@ final class AppModel {
     private(set) var authorization: ScreenTimeAuthorization = .notDetermined
     private(set) var urgesThisSession = 0
     private var hasRequestedAuthorization = false
+    /// False for a moment after launch, while Screen Time reports its status.
+    private var authorizationSettled = false
 
     // MARK: Presentation
 
@@ -69,8 +71,6 @@ final class AppModel {
     private var startAfterChoosingApps = false
     /// Start a session when the automatic paywall closes ("Go again").
     private var startAfterPaywall = false
-    /// Present the paywall once "Session complete" has finished dismissing.
-    private var paywallAfterCompletion = false
     /// Start a session once "Session complete" has finished dismissing.
     private var startAfterCompletion = false
 
@@ -85,7 +85,7 @@ final class AppModel {
             demoStore.reset()
             store = demoStore
             screenTime = DemoScreenTimeService(authorized: config.skipOnboarding && config.initialScreen != .noAccess)
-            entitlements = Entitlements(forcedStatus: config.forcePro ? .trial(daysLeft: 5) : nil)
+            entitlements = Entitlements(forcedStatus: config.forcePro ? .trial(daysLeft: 5) : .free, store: demoStore)
         } else {
             store = .shared
             screenTime = LiveScreenTimeService()
@@ -112,6 +112,16 @@ final class AppModel {
 
         loadFromStore()
         authorization = screenTime.authorization
+        authorizationSettled = authorization != .notDetermined || config.isDemo
+        screenTime.onAuthorizationChange = { [weak self] in
+            guard let self else { return }
+            self.authorization = self.screenTime.authorization
+            if self.authorization != .notDetermined { self.authorizationSettled = true }
+        }
+        Task { [weak self] in
+            try? await Task.sleep(for: .seconds(2))
+            self?.authorizationSettled = true
+        }
 
         #if DEBUG
         if config.initialScreen == .endedEarly, let session = try? SessionMath.makeSession(
@@ -133,6 +143,10 @@ final class AppModel {
         }
         if !flags.hasCompletedOnboarding && !hasRequestedAuthorization && authorization == .notDetermined {
             return .onboarding
+        }
+        // Right after launch the status may still read "not determined" for an approved user.
+        if flags.hasCompletedOnboarding && authorization == .notDetermined && !authorizationSettled {
+            return .main
         }
         return .noAccess
     }
@@ -266,9 +280,10 @@ final class AppModel {
         if activeSession != nil {
             screenTime.applySessionShield(selection)
         }
-        if entitlements.canUse(.schedules),
-           let active = ScheduleMapping.activeSchedule(in: schedules, at: clock.now, calendar: calendar) {
-            screenTime.applyScheduleShield(selection, scheduleID: active.schedule.id)
+        if entitlements.canUse(.schedules) {
+            for active in ScheduleMapping.activeSchedules(in: schedules, at: clock.now, calendar: calendar) {
+                screenTime.applyScheduleShield(selection, scheduleID: active.schedule.id)
+            }
         }
     }
 
@@ -283,6 +298,12 @@ final class AppModel {
             startAfterChoosingApps = false
             if hasSelection { startSession() }
         }
+    }
+
+    /// "Back" on Choose apps: never starts a pending session.
+    func cancelChoosingApps() {
+        startAfterChoosingApps = false
+        if path.last == .chooseApps { path.removeLast() }
     }
 
     func openChooseApps() {
@@ -422,24 +443,32 @@ final class AppModel {
     func dismissCompletion(goAgain: Bool) {
         engine.markCompletionSeen()
         flags = store.flags
-
-        if ProAccess.shouldShowAutomaticPaywall(flags: flags, status: entitlements.status) {
-            updateFlags { $0.hasSeenAutomaticPaywall = true }
-            paywallAfterCompletion = true
-            startAfterPaywall = goAgain
-        } else {
-            startAfterCompletion = goAgain
-        }
+        startAfterCompletion = goAgain
         completion = nil
     }
 
-    /// Called from the full-screen cover's onDismiss.
+    /// Called from the full-screen cover's onDismiss. Shows the paywall once after the first
+    /// completed session, but only once the subscription status is known, so a subscriber
+    /// never sees it (and the one-time flag isn't spent) on a cold launch.
     func completionDismissed() {
-        if paywallAfterCompletion {
-            paywallAfterCompletion = false
+        let goAgain = startAfterCompletion
+        startAfterCompletion = false
+        if entitlements.isLoaded {
+            finishCompletion(goAgain: goAgain)
+        } else {
+            Task {
+                await entitlements.refresh()
+                finishCompletion(goAgain: goAgain)
+            }
+        }
+    }
+
+    private func finishCompletion(goAgain: Bool) {
+        if ProAccess.shouldShowAutomaticPaywall(flags: flags, status: entitlements.status) {
+            updateFlags { $0.hasSeenAutomaticPaywall = true }
+            startAfterPaywall = goAgain
             sheet = .paywall
-        } else if startAfterCompletion {
-            startAfterCompletion = false
+        } else if goAgain {
             startSession()
         }
     }
@@ -482,7 +511,12 @@ final class AppModel {
     func setNotifyWhenDone(_ isOn: Bool) {
         updateSettings { $0.notifyWhenDone = isOn }
         if isOn && !config.isDemo {
-            Task { await notifications.requestAuthorization() }
+            Task {
+                if await !notifications.requestAuthorization() {
+                    updateSettings { $0.notifyWhenDone = false }
+                    errorMessage = String(localized: "Notifications are off for Still. Turn them on in Settings → Notifications → Still.")
+                }
+            }
         }
     }
 
@@ -494,8 +528,12 @@ final class AppModel {
         let previous = schedules
         do {
             try register(newSchedules)
-        } catch {
+        } catch ActivitySchedulerError.tooManySchedules {
             errorMessage = String(localized: "Too many schedules are on. Turn one off and try again.")
+            try? register(previous)
+            return false
+        } catch {
+            errorMessage = String(localized: "Screen Time couldn't update your schedules. Please try again.")
             try? register(previous)
             return false
         }
@@ -543,8 +581,8 @@ final class AppModel {
         for id in toClear {
             screenTime.clearScheduleShield(id)
         }
-        // A schedule that is active right now gets its shield immediately.
-        if let active = ScheduleMapping.activeSchedule(in: effective, at: clock.now, calendar: calendar) {
+        // Schedules that are active right now get their shield immediately.
+        for active in ScheduleMapping.activeSchedules(in: effective, at: clock.now, calendar: calendar) {
             screenTime.applyScheduleShield(selection, scheduleID: active.schedule.id)
         }
     }

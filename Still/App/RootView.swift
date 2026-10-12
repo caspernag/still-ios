@@ -113,15 +113,3 @@ private struct MainStack: View {
         #endif
     }
 }
-
-/// Re-enables the swipe-back gesture while the navigation bar is hidden.
-extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        interactivePopGestureRecognizer?.delegate = self
-    }
-
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        viewControllers.count > 1
-    }
-}
