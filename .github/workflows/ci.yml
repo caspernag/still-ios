@@ -51,19 +51,20 @@ jobs:
             -IDEBuildingContinueBuildingAfterErrors=YES \
             CODE_SIGNING_ALLOWED=NO build 2>&1 | tee build-release.log | grep -E "(error|warning):|BUILD (SUCCEEDED|FAILED)" | sort -u
 
+      # StoreKit testing from the xcodebuild CLI is broken on the iOS 26.5 simulator runtime
+      # (the .storekit file isn't synced), so tests prefer the iOS 26.2 runtime when present.
       - name: Pick simulator
         id: sim
         run: |
-          NAME="$(xcrun simctl list devices available | grep -oE 'iPhone 1[6-9] Pro( Max)?' | sort -u | tail -1)"
-          [ -z "$NAME" ] && NAME="$(xcrun simctl list devices available | grep -oE 'iPhone [0-9]+[A-Za-z ]*' | head -1 | sed 's/ *$//')"
-          echo "name=$NAME" >> "$GITHUB_OUTPUT"
-          echo "Using $NAME"
+          UDID="$(python3 Scripts/pick_simulator.py "iPhone 1[6-9] Pro$" 26.2)"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          echo "Using $UDID"
 
       - name: Test (unit, StoreKit, UI)
         run: |
           set -o pipefail
           xcodebuild test -project Still.xcodeproj -scheme Still \
-            -destination "platform=iOS Simulator,name=${{ steps.sim.outputs.name }}" \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
             -skip-testing:StillUITests/ScreenshotTests \
             -skip-testing:StillUITests/ReviewScreenshotTests \
             -resultBundlePath TestResults.xcresult 2>&1 | tee test.log | grep -E "(error|warning):|Test Case .*(passed|failed)|Executed|TEST (SUCCEEDED|FAILED)"
@@ -88,7 +89,8 @@ jobs:
   screenshots:
     name: Screenshots and design review
     needs: ios
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    # Runs even if a test failed, so the screenshots stay current; not when the build was cancelled.
+    if: ${{ !cancelled() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
     runs-on: macos-26
     timeout-minutes: 60
     permissions:
@@ -109,10 +111,9 @@ jobs:
       - name: Boot 6.9-inch simulator
         id: sim
         run: |
-          NAME="$(xcrun simctl list devices available | grep -oE 'iPhone 1[6-9] Pro Max' | sort -u | tail -1)"
-          UDID="$(xcrun simctl list devices available | grep -m1 "    $NAME (" | sed -E 's/.*\(([0-9A-F-]{36})\).*/\1/')"
+          UDID="$(python3 Scripts/pick_simulator.py "iPhone 1[6-9] Pro Max$" 26.2)"
           echo "udid=$UDID" >> "$GITHUB_OUTPUT"
-          echo "Using $NAME ($UDID)"
+          echo "Using $UDID"
           xcrun simctl boot "$UDID" || true
           xcrun simctl bootstatus "$UDID" -b
           xcrun simctl status_bar "$UDID" override --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 \

@@ -144,9 +144,11 @@ public struct CircleIconButton: View {
 
 /// The 32 pt close button on sheets and the paywall.
 public struct CloseButton: View {
+    let identifier: String
     let action: () -> Void
 
-    public init(action: @escaping () -> Void) {
+    public init(identifier: String = "close", action: @escaping () -> Void) {
+        self.identifier = identifier
         self.action = action
     }
 
@@ -162,7 +164,7 @@ public struct CloseButton: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text("Close"))
-        .accessibilityIdentifier("close")
+        .accessibilityIdentifier(identifier)
     }
 }
 

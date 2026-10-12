@@ -33,7 +33,7 @@ struct PaywallView: View {
             dismiss()
         }
         .overlay(alignment: .topTrailing) {
-            CloseButton { dismiss() }
+            CloseButton(identifier: "paywallClose") { dismiss() }
                 .padding(.trailing, 14)
                 .padding(.top, 10)
         }

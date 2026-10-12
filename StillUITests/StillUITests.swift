@@ -12,8 +12,9 @@ final class StillUITests: XCTestCase {
         return app
     }
 
-    private func paywallHeader(_ app: XCUIApplication) -> XCUIElement {
-        app.staticTexts["Get your time back."]
+    /// The paywall's own close button: present whether or not StoreKit has loaded products.
+    private func paywall(_ app: XCUIApplication) -> XCUIElement {
+        app.buttons["paywallClose"]
     }
 
     /// onboarding → choose apps → home → start → session → hold to end → ended-early dialog
@@ -58,8 +59,8 @@ final class StillUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["completeHeadline"].waitForExistence(timeout: 5))
         app.buttons["completeDone"].tap()
 
-        XCTAssertTrue(paywallHeader(app).waitForExistence(timeout: 5))
-        app.buttons["close"].firstMatch.tap()
+        XCTAssertTrue(paywall(app).waitForExistence(timeout: 10))
+        paywall(app).tap()
         XCTAssertTrue(app.buttons["startSession"].waitForExistence(timeout: 5))
 
         // Second completion: no automatic paywall.
@@ -68,7 +69,7 @@ final class StillUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["completeHeadline"].waitForExistence(timeout: 5))
         app.buttons["completeDone"].tap()
         XCTAssertTrue(app.buttons["startSession"].waitForExistence(timeout: 5))
-        XCTAssertFalse(paywallHeader(app).waitForExistence(timeout: 2))
+        XCTAssertFalse(paywall(app).waitForExistence(timeout: 2))
     }
 
     /// settings → schedules (paywall when free)
@@ -78,7 +79,7 @@ final class StillUITests: XCTestCase {
         let schedules = app.buttons["schedulesRow"]
         XCTAssertTrue(schedules.waitForExistence(timeout: 5))
         schedules.tap()
-        XCTAssertTrue(paywallHeader(app).waitForExistence(timeout: 5))
+        XCTAssertTrue(paywall(app).waitForExistence(timeout: 10))
     }
 
     /// settings → schedules opens the list for Pro users.
@@ -87,13 +88,15 @@ final class StillUITests: XCTestCase {
         app.buttons["settingsButton"].tap()
         app.buttons["schedulesRow"].tap()
         XCTAssertTrue(app.buttons["addSchedule"].waitForExistence(timeout: 5))
-        XCTAssertFalse(paywallHeader(app).exists)
+        XCTAssertFalse(paywall(app).exists)
     }
 
     /// The paywall renders the StoreKit test products (Still.storekit is selected in the scheme).
     func testPaywallRendersProducts() {
         let app = launch(["-StillDemoSkipOnboarding", "-StillDemoScreen", "paywall"])
-        XCTAssertTrue(paywallHeader(app).waitForExistence(timeout: 5))
+        XCTAssertTrue(paywall(app).waitForExistence(timeout: 10))
+        // The marketing header renders once StoreKit has loaded the products.
+        XCTAssertTrue(app.staticTexts["Get your time back."].waitForExistence(timeout: 15))
         XCTAssertTrue(app.staticTexts["Try Still Pro free for 7 days."].exists)
 
         let yearly = app.descendants(matching: .any)
@@ -108,7 +111,7 @@ final class StillUITests: XCTestCase {
     func testCustomDurationIsPro() {
         let app = launch(["-StillDemoSkipOnboarding"])
         app.buttons["duration.custom"].tap()
-        XCTAssertTrue(paywallHeader(app).waitForExistence(timeout: 5))
+        XCTAssertTrue(paywall(app).waitForExistence(timeout: 5))
     }
 
     /// Pro users get the custom duration sheet.
